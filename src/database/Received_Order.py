@@ -28,7 +28,6 @@ class Received_Order(Place_Order):
         # Assign the AccessDetails collection from LoginSystem database to variable called login_DB 
         self.data_base = client['CompanyDetails']
         self.received_order_DB = self.data_base['OrdersReceived']
-        self.performance_DB = self.data_base['Performance']
 
     def order_received():
         ...
