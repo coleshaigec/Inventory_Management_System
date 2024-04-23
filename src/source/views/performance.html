@@ -68,14 +68,21 @@
         </div>
     </div>
 
+    <div id="display_area_performance">
+
+    </div>
+
     
 
 </body>
+
+<script src ="../../backend/performance.js"> </script>
 
 <script>
   document.getElementById("LogoMenu").addEventListener("click", function() {
   window.location.href = "map.html";
   redirectToMainMenu();
+  remote.app.emit('map-page');
 });
 
   function redirectToMainMenu() {
@@ -84,96 +91,38 @@
 </script>
 
 <script>
-  document.getElementById("LogoMenu").addEventListener("click", () => {
-      remote.app.emit('login-successful-page');
-  });
-</script>
-
-<script>
   document.getElementById("dashboard").addEventListener("click", function() {
   window.location.href = "dashboard.html";
-  redirectToDashboard();
+  remote.app.emit('dashboard-page');
 });
-
-  function redirectToDashboard() {
-      window.location.href = "dashboard.html";
-  }
 </script>
 
 <script>
-  document.getElementById("dashboard").addEventListener("click", () => {
-      remote.app.emit('dashboard-page');
-  });
-</script>
-
-<script>
-  document.getElementById("inventory").addEventListener("click", function() {
-  window.location.href = "inventory.html";
-  redirectToInventory();
+document.getElementById("inventory").addEventListener("click", function() {
+window.location.href = "inventory.html";
+remote.app.emit('inventory-page');
 });
-
-  function redirectToInventory() {
-      window.location.href = "inventory.html";
-  }
 </script>
 
 <script>
-  document.getElementById("inventory").addEventListener("click", () => {
-      remote.app.emit('inventory-page');
-  });
-</script>
-
-
-<script>
-  document.getElementById("orders").addEventListener("click", function() {
-  window.location.href = "orders.html";
-  redirectToOrders();
+document.getElementById("order").addEventListener("click", function() {
+window.location.href = "order.html";
+remote.app.emit('order-page');
 });
-
-  function redirectToOrders() {
-      window.location.href = "orders.html";
-  }
 </script>
 
 <script>
-  document.getElementById("orders").addEventListener("click", () => {
-      remote.app.emit('orders-page');
-  });
-</script>
-
-
-<script>
-  document.getElementById("sales").addEventListener("click", function() {
-  window.location.href = "sales.html";
-  redirectToSales();
+document.getElementById("sales").addEventListener("click", function() {
+window.location.href = "sales.html";
+remote.app.emit('sales-page');
 });
-
-  function redirectToSales() {
-      window.location.href = "sales.html";
-  }
 </script>
 
 <script>
-  document.getElementById("sales").addEventListener("click", () => {
-      remote.app.emit('sales-page');
-  });
-</script>
-
-<script>
-  document.getElementById("performance").addEventListener("click", function() {
-  window.location.href = "performance.html";
-  redirectToPerformance();
+document.getElementById("performance").addEventListener("click", function() {
+window.location.href = "performance.html";
+remote.app.emit('performance-page');
 });
-
-  function redirectToPerformance() {
-      window.location.href = "performance.html";
-  }
-</script>
-
-<script>
-  document.getElementById("performance").addEventListener("click", () => {
-      remote.app.emit('performance-page');
-  });
 </script>
 
 </html>

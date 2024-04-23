@@ -82,88 +82,39 @@
 <script>
   document.getElementById("dashboard").addEventListener("click", function() {
   window.location.href = "dashboard.html";
-  redirectToDashboard();
+  remote.app.emit('dashboard-page');
+  event.preventDefault();
+  const message = "generate_report"; // to be changed later
+  ipcRenderer.send('get_report', {message});
+});
+</script>
+
+<script>
+document.getElementById("inventory").addEventListener("click", function() {
+window.location.href = "inventory.html";
+remote.app.emit('inventory-page');
+});
+</script>
+
+<script>
+document.getElementById("order").addEventListener("click", function() {
+window.location.href = "order.html";
+remote.app.emit('order-page');
+});
+</script>
+
+<script>
+document.getElementById("sales").addEventListener("click", function() {
+window.location.href = "sales.html";
+remote.app.emit('sales-page');
+});
+</script>
+
+<script>
+document.getElementById("performance").addEventListener("click", function() {
+window.location.href = "performance.html";
+remote.app.emit('performance-page');
 });
 
-  function redirectToDashboard() {
-      window.location.href = "dashboard.html";
-  }
-</script>
-
-<script>
-  document.getElementById("dashboard").addEventListener("click", () => {
-      remote.app.emit('dashboard-page');
-  });
-</script>
-
-<script>
-  document.getElementById("inventory").addEventListener("click", function() {
-  window.location.href = "inventory.html";
-  redirectToInventory();
-});
-
-  function redirectToInventory() {
-      window.location.href = "inventory.html";
-  }
-</script>
-
-<script>
-  document.getElementById("inventory").addEventListener("click", () => {
-      remote.app.emit('inventory-page');
-  });
-</script>
-
-
-<script>
-  document.getElementById("orders").addEventListener("click", function() {
-  window.location.href = "orders.html";
-  redirectToOrders();
-});
-
-  function redirectToOrders() {
-      window.location.href = "orders.html";
-  }
-</script>
-
-<script>
-  document.getElementById("orders").addEventListener("click", () => {
-      remote.app.emit('orders-page');
-  });
-</script>
-
-
-<script>
-  document.getElementById("sales").addEventListener("click", function() {
-  window.location.href = "sales.html";
-  redirectToSales();
-});
-
-  function redirectToSales() {
-      window.location.href = "sales.html";
-  }
-</script>
-
-<script>
-  document.getElementById("sales").addEventListener("click", () => {
-      remote.app.emit('sales-page');
-  });
-</script>
-
-<script>
-  document.getElementById("performance").addEventListener("click", function() {
-  window.location.href = "performance.html";
-  redirectToPerformance();
-});
-
-  function redirectToPerformance() {
-      window.location.href = "performance.html";
-  }
-</script>
-
-<script>
-  document.getElementById("performance").addEventListener("click", () => {
-      remote.app.emit('performance-page');
-  });
-</script>
 
 </html>
