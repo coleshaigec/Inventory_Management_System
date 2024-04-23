@@ -15,7 +15,8 @@
                 <br> <br>
                 <input type="password" id ="password" placeholder="Password" required>
                 <br> <br>
-                <button type="submit">Login</button>
+		<button type="submit">Login</button>
+		<button type="button" id="goToRegister">Register</button>
             </form>
             <div class="message" id="message"></div>
         </main>
@@ -23,15 +24,6 @@
     
     <script src="../public/functions.js"></script>
 
-    <script>
-        document.getElementById('loginForm').addEventListener('submit', (event) => {
-    event.preventDefault(); 
-    const username = document.getElementById('username').value;
-    const password = document.getElementById('password').value;
-  
-    ipcRenderer.send('perform-login', { username, password });
-  });
-    </script>
 
     <!-- <script>
         const { ipcRenderer } = require('electron');
