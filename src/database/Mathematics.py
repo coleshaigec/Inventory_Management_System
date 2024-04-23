@@ -29,7 +29,7 @@ class Mathematics(Received_Order):
         
         # Assign the AccessDetails collection from LoginSystem database to variable called login_DB 
         self.data_base = client['CompanyDetails']
-        self.place_order_DB = self.data_base['OrdersPlaced']
+        self.performance_DB = self.data_base['Performance']
 
     # calculate gross profit
     def gross_profit(self, product):
@@ -74,20 +74,3 @@ class Mathematics(Received_Order):
             for i in [number_stock,number_stock-number_sales+1]:
                 COGS += all_product[i].price
                 
-
-
-if __name__ == "__main__":
-    # Check if username and password are provided as command-line arguments
-    db = Mathematics()
-    # Check if username and password are provided as command-line arguments
-    if len(sys.argv) == 4:
-        _, username, password, operation = sys.argv
-        if operation == "login":
-            db.login(username, password)
-    elif len(sys.argv) == 5:
-        _, username, password, status, operation = sys.argv
-        if operation == "register":
-            db.register(username, password, status)
-    else:
-        print("Usage: LoginSystem.py <username> <password>")
-        sys.exit(1)
