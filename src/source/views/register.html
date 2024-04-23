@@ -17,7 +17,8 @@
                 <br> <br>
                 <input type="text" id ="status" placeholder="status" required>
                 <br> <br>
-                <button type="submit">Register</button>
+		<button type="submit">Register</button>
+		<button type="button" id="goToLogin">Login</button>
             </form>
             <div class="message" id="message_register"></div>
         </main>
@@ -25,16 +26,7 @@
     
     <script src="../public/functions.js"></script>
 
-    <script>
-        document.getElementById('registerForm').addEventListener('submit', (event) => {
-    event.preventDefault(); 
-    const username = document.getElementById('username').value;
-    const password = document.getElementById('password').value;
-    const status = document.getElementById('status').value;
-  
-    ipcRenderer.send('perform-register', { username, password, status });
-  });
-    </script>
+
 
 
 </body>
