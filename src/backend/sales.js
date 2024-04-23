@@ -20,7 +20,7 @@ document.getElementById('load').addEventListener('click', (event) => {
 
     ipcRenderer.send('create-table', {message});
   });
-
+//
 ipcRenderer.on('table_success', (event, data) => {
     const our_data = JSON.parse(data.dataset);
     const number_data = our_data.length;
