@@ -71,77 +71,46 @@ app.on("activate", () => {
     }
 });
 
-// login page
 app.on("open-login-page", () => {
-    mainWin.loadURL(url.format({
-        pathname: path.join(__dirname, "views/login.html"),
-        protocol: "file",
-        slashes: true
-    }));
+	mainWin.loadURL(url.format({
+        	pathname: path.join(__dirname, "views/login.html"),
+        	protocol: "file",
+        	slashes: true
+    	}));
 });
 
-// for login performing
 ipcMain.on('perform-login', (event, { username, password}) => {
-    loginAttempts++;
-    operation = 'login';
-    if (loginAttempts >= MAX_LOGIN_ATTEMPTS) {
-        resetLoginAttempts();
-        event.reply('reset-login');
-        mainWin.loadFile('src/source/views/index.html');
-        return;
-    }
-    
-    const pythonProcess = spawn('python', ['src/database/Mathematics.py', username, password, operation]);
+	loginAttempts++;
+    	operation = 'login';
+    	if (loginAttempts >= MAX_LOGIN_ATTEMPTS) {
+        	loginAttempts = 0;
+		mainWin.loadFile('src/source/views/index.html');
+	}
+    	const pythonProcess = spawn('python', ['src/database/Mathematics.py', username, password, operation]);
+	pythonProcess.stdout.on('data', (data) => {
+      		const loginResponse = data.toString().trim(); 
+		if (loginResponse === 'Success') { 
+			user += username;
+			mainWin.loadFile('src/source/views/map.html');	
+		} else {
+        		event.reply('login-failure', { attemptsLeft: 5 - loginAttempts });
+      		}
+	});
+});
 
-    pythonProcess.stdout.on('data', (data) => {
-      const loginResponse = data.toString().trim();
-        
-      if (loginResponse === 'Success') { 
-	event.reply('login-success', { username, password });
-      } else {
-        event.reply('login-failure', { attemptsLeft: 5 - loginAttempts });
-      }
-    });  
-    pythonProcess.on('error', (error) => {
-      console.error(`An error occurred: ${error.message}`);
-      event.reply('login-failure', 'An error occurred during login.');
-    });
-  
-    pythonProcess.stderr.on('data', (data) => {
-      console.error(`stderr: ${data}`);
-      event.reply('login-failure', 'An error occurred during login.');
-    });
-  });
-
-  // for performing registration
-  ipcMain.on('perform-register', (event, { username, password, status }) => {
-    operation = 'register';
-    // change path to script for register
-    const pythonProcess = spawn('python', ['src/database/Mathematics.py', username, password, status, operation]);
-
-    pythonProcess.stdout.on('data', (data) => {
-      const registerResponse = data.toString().trim();
-
-      let dataString = ''
-      dataString += registerResponse;
-        
-      if (registerResponse === 'Success') { 
-	    event.reply('register_success', { username, password });
-      } else {
-          event.reply('register-failure', {response: dataString});
-      }
-
-    });  
-    pythonProcess.on('error', (error) => {
-      console.error(`An error occurred: ${error.message}`);
-      event.reply('register-failure', 'An error occurred during register.');
-    });
-  
-    pythonProcess.stderr.on('data', (data) => {
-      console.error(`stderr: ${data}`);
-      event.reply('register-failure', 'An error occurred during register.');
-    });
-  });
+ipcMain.on('perform-register', (event, { username, password, status }) => {
+	operation = 'register';
+	const pythonProcess = spawn('python', ['src/database/Mathematics.py', username, password, status, operation]);
+    	pythonProcess.stdout.on('data', (data) => {
+      		const registerResponse = data.toString().trim();
+		if (registerResponse === 'Success') { 
+			user += username;
+	    		mainWin.loadFile('src/source/views/login.html');
+      		} else {
+          		event.reply('register-failure', {registerResponse});
+      		}
+	});  
+});
 
 // for generating report for performance page
 ipcMain.on('get_report', (event, { message }) => {
