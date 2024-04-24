@@ -44,7 +44,7 @@ class Sales(Product):
         else:
             return False
                     
-    def SKU_revenue_calculator(self, SKU, start_date, end_date)
+    def SKU_revenue_calculator(self, SKU, start_date, end_date):
         start_date = normal_date_checker(start_date)
         end_date = normal_date_checker(end_date)
         cursor = sales_DB.find({'SKU': SKU}, {'_id': 0, 'date': 1, 'SKU': 0, 'product_name': 0, 'num': 1, 'cost': 1})
@@ -59,7 +59,7 @@ class Sales(Product):
         else:
             return False
         
-    def name_revenue_calculator(self, product_name, start_date, end_date)
+    def name_revenue_calculator(self, product_name, start_date, end_date):
         start_date = normal_date_checker(start_date)
         end_date = normal_date_checker(end_date)
         cursor = sales_DB.find({'product_name': product_name}, {'_id': 0, 'date': 1, 'SKU': 0, 'product_name': 0, 'num': 1, 'cost': 1})

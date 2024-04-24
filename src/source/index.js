@@ -86,11 +86,10 @@ ipcMain.on('perform-login', (event, { username, password}) => {
         	loginAttempts = 0;
 		mainWin.loadFile('src/source/views/index.html');
 	}
-    	const pythonProcess = spawn('python', ['src/database/Mathematics.py', username, password, operation]);
+    	const pythonProcess = spawn('python', ['src/database/main.py', username, password, operation]);
 	pythonProcess.stdout.on('data', (data) => {
       		const loginResponse = data.toString().trim(); 
 		if (loginResponse === 'Success') { 
-			user += username;
 			mainWin.loadFile('src/source/views/map.html');	
 		} else {
         		event.reply('login-failure', { attemptsLeft: 5 - loginAttempts });
@@ -100,11 +99,10 @@ ipcMain.on('perform-login', (event, { username, password}) => {
 
 ipcMain.on('perform-register', (event, { username, password, status }) => {
 	operation = 'register';
-	const pythonProcess = spawn('python', ['src/database/Mathematics.py', username, password, status, operation]);
+	const pythonProcess = spawn('python', ['src/database/main.py', username, password, status, operation]);
     	pythonProcess.stdout.on('data', (data) => {
       		const registerResponse = data.toString().trim();
 		if (registerResponse === 'Success') { 
-			user += username;
 	    		mainWin.loadFile('src/source/views/login.html');
       		} else {
           		event.reply('register-failure', {registerResponse});
