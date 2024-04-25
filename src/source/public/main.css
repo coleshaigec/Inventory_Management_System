@@ -73,3 +73,8 @@ form input[type="button"]{
     font-family: "Crimson Text";
     font-size: 18px;
 }
+
+.container {
+    display: flex;
+    flex-wrap: wrap;
+  }

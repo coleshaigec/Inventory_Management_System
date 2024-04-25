@@ -3,7 +3,6 @@ const url = require("url");
 const path = require("path");
 const { spawn } = require('child_process');
 
-
 let mainWin;
 let userWin;
 let loginAttempts = 0;
@@ -233,6 +232,23 @@ ipcMain.on('inventory-page', () => {
     }));
 });
 
+ipcMain.on('create-sale-table', (event, {abc}) => {
+	const pageNumber = abc; // Make sure this is the correct page number
+	const python = spawn('python', ["src/database/Sales.py", pageNumber]);
+	let dataString = '';
+	python.stdout.on('data', (data) => {
+    dataString += data.toString();
+		event.reply('sale_table_success', {dataset: dataString});
+	});
+  python.on('error', (error) => {
+    console.error(`An error occurred: ${error.message}`);
+  });
+
+  python.stderr.on('data', (data) => {
+    console.error(`stderr: ${data}`);
+  });
+});
+
 ///////// create table
 ipcMain.on('create-table', (event, {message}) => {
 
@@ -273,3 +289,5 @@ app.on('window-all-closed', () => app.quit());
 app.on('activate', () => {
     if (BrowserWindow.getAllWindows().length === 0) createWindow();
 });
+
+

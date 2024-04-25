@@ -1,13 +1,5 @@
 const { ipcRenderer } = require('electron');
 
-// document.getElementById('loginForm').addEventListener('submit', (event) => {
-//     event.preventDefault(); 
-//     const username = document.getElementById('username').value;
-//     const password = document.getElementById('password').value;
-  
-//     ipcRenderer.send('perform-login', { username, password });
-//   });
-  
 ipcRenderer.on('login-success', (event, arg) => {
     window.location.href = '../views/map.html';
     remote.app.emit('map-page');
@@ -29,21 +21,10 @@ ipcRenderer.on('login-attempt-exceeded', () => {
 
 ipcRenderer.on('reset-login', (event,arg) => {
     document.getElementById('message').textContent = '';
-    // Optionally, clear the username and password fields
     document.getElementById('username').value = '';
     document.getElementById('password').value = '';
-    // Enable the login button if it was previously disabled
     document.getElementById('loginButton').disabled = false;
 });
-
-// document.getElementById('registerForm').addEventListener('submit', (event) => {
-//     event.preventDefault(); 
-//     const username = document.getElementById('username').value;
-//     const password = document.getElementById('password').value;
-//     const status = document.getElementById('status').value;
-  
-//     ipcRenderer.send('perform-register', { username, password, status });
-//   });
 
 ipcRenderer.on('register_success', (event,data) => {
     window.location.href = '../views/index.html';
@@ -57,10 +38,8 @@ ipcRenderer.on('register-failure', (event, data) => {
 
 ipcRenderer.on('reset-register', () => {
     document.getElementById('message').textContent = '';
-    // Optionally, clear the username and password fields
     document.getElementById('username').value = '';
     document.getElementById('password').value = '';
     document.getElementById('status').value = '';
-    // Enable the login button if it was previously disabled
     document.getElementById('loginButton').disabled = false;
 });

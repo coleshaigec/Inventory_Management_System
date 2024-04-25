@@ -285,7 +285,7 @@ if __name__ == '__main__':
     if len(sys.argv) == 2:
         _, message = sys.argv
     #     db = Product()
-        if(message == "printALL"):
+        if(message != False):
             URI = "mongodb+srv://" + "Admin" + ":" + "Admin" + "@businessinventorychecke.hnarzhd.mongodb.net/?retryWrites=true&w=majority&appName=BusinessInventoryChecker&tlsAllowInvalidCertificates=true"
             client = MongoClient(URI, server_api=ServerApi('1'))
                 
@@ -295,8 +295,10 @@ if __name__ == '__main__':
             cursor = product_DB.find({}, {'_id': 0, 'SKU': 1, 'product_name': 1, 'stock': 1, 'cost': 1,
                                                 'inventory_value': 1, 'expected_sales': 1, 'SKU_class': 1})
             data = []
-            for document in cursor:
-                data.append(document)
+            start = (int(message)-1) * 50
+            for x in range(50):
+                data.append(cursor[start])
+                start += 1
             print(json.dumps(data))  # print JSON data
     else:
         print("InValid argument")

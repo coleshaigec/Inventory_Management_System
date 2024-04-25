@@ -11,6 +11,8 @@ from pymongo.errors import ConnectionFailure
 from datetime import date
 import re
 from Product import Product
+import csv
+import json
 
 letters = ('a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z')
 capitals = ('A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z')
@@ -74,21 +76,34 @@ class Sales(Product):
                 myreader = csv.reader(csvfile)
             for row in myreader:  
                 self.place_order_DB.insert_one({'date': row[0], 'SKU': row[1], 'product_name': row[2], 'num': row[3], 'cost': row[4]})
-            filename.close()
+            csvfile.close()
         
     def add_sale(self):
-        ...
+        return True
         
     def delete_sale(self):
-        ...
+        return True
 
     def update_sale(self):
-        ...
-        
+        return True
 
-
-        
-        
-        
-        #
-        
+if __name__ == '__main__':
+    if len(sys.argv) == 2:
+        _, page_number_str = sys.argv
+        page_number = int(page_number_str)
+        db = Sales()
+        # ... existing code to connect to MongoDB ...
+        cursor = list(db.sales_DB.find({}, {'_id': 0, 'date': 1, 'SKU': 1, 'product_name': 1, 'num': 1, 'cost': 1,}))
+        length = len(cursor)
+        data = []
+        start = (int(page_number_str)-1) * 50
+        for x in range(50):
+            if start > length:
+                break
+            else:
+                data.append(cursor[start])
+                start += 1
+        print(json.dumps(data))  # print JSON data
+    else:
+        print("Invalid argument")
+        sys.exit(1)
