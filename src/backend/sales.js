@@ -33,7 +33,6 @@ ipcRenderer.on('sale_table_success', (event, data) => {
 window.addEventListener('scroll', () => {
 	if (window.scrollY + window.innerHeight >= window.documentElement.scrollHeight - 20) { // Adjust as needed
 			if (!loading) { // Prevent duplicate calls
-				console.log("called more");
 				loading = true;
 				ipcRenderer.send('create-sale-table', {abc});
   //Ensure this increments correctly for pagination
